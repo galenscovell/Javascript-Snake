@@ -1,13 +1,11 @@
 
 
 // Global Variables
-var boardWidth = Math.round(screen.width * 0.7 / 10) * 10;
-var boardHeight = Math.round(screen.height * 0.6 / 10) * 10;
+var boardWidth = Math.round($(window).width() * 0.8 / 20) * 20;
+var boardHeight = Math.round($(window).height() * 0.7 / 20) * 20;
 
 
 $(document).ready(function() {
-    console.log(boardWidth, boardHeight);
-
     $('#game_board').width(boardWidth);
     $('#game_board').height(boardHeight);
 
