@@ -1,5 +1,12 @@
 # Javascript-Snake
 
-Relive the class game of Snake in this fully featured online app.
+(Currently in-progress)
+
+Classic game of Snake with some original tidbits thrown in for good measure.
+
+* Dynamic board size depending on window width/height
+* 
+* 
+* 
 
 LIVE DEMO:[]
