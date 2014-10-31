@@ -31,3 +31,11 @@ p {
     width: 20px;
     box-shadow: inset 0px 0px 1px gray;
 }
+
+.snakehead, .snakebody {
+    background-color: rgba(0, 125, 0, 0.5);
+}
+
+.fruit {
+    background-color: rgba(125, 0, 0, 0.5);
+}
