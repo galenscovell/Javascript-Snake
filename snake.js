@@ -14,16 +14,15 @@ function create_board(width, height) {
 
 
 function create_snake() {
-    // Create 3-unit snake at (5,5), (4,5), (3,5)
-    $('#5_5').addClass('snakehead');
-    $('#4_5').addClass('snakebody');
-    $('#3_5').addClass('snakebody');
+    // Create 3-unit snake at (9,9), (8,9), (7,9)
+    $('#9_9').addClass('snakehead');
+    $('#8_9').addClass('snake');
+    $('#7_9').addClass('snake');
 
-    // Add snake position to SNAKE array
-    SNAKE.push('5_5');
-    SNAKE.push('4_5');
-    SNAKE.push('3_5');
+    // Add body segment positions to object
+    
 }
+
 
 
 function generate_fruit() {
@@ -32,7 +31,41 @@ function generate_fruit() {
     var fruitY = Math.round((Math.random() * boardHeight) / 20) * 20;
     var fruitID = '#' + (fruitX / 20) + "_" + (fruitY / 20);
 
-    $(fruitID).addClass('fruit');
+    if ($(fruitID).is('.snake', 'snakehead')) {
+        generate_fruit();
+    } else {
+        $(fruitID).addClass('fruit');
+    }
+}
+
+
+function update_head(direction) {
+    var current = $('.snakehead').attr('id').split("_");
+    var update = 0;
+
+    $('.snakehead').removeClass('snakehead');
+
+    if (direction === 'right') {
+        update = parseInt(current[0]) + 1;
+        updatedSpot = "#" + update + "_" + current[1];
+        return updatedSpot;
+    } else if (direction === 'left') {
+        update = parseInt(current[0]) - 1;
+        updatedSpot = "#" + update + "_" + current[1];
+        return updatedSpot;
+    } else if (direction === 'up') {
+        update = parseInt(current[1]) - 1;
+        updatedSpot = "#" + current[0] + "_" + update;
+        return updatedSpot;
+    } else if (direction === 'down') {
+        update = parseInt(current[1]) + 1;
+        updatedSpot = "#" + current[0] + "_" + update;
+        return updatedSpot;
+    }
+}
+
+function update_body() {
+    
 }
 
 
@@ -43,21 +76,51 @@ function snake_movement() {
         if (currentMove != '') {
             move(currentMove);
         }
-    }, 500);
+    }, 100);
 
     $(document).keydown(function(event) {
+        event.preventDefault();
         switch (event.which) {
             case 39:
                 currentMove = 'right';
+                break;
             case 37:
                 currentMove = 'left';
+                break;
             case 38:
                 currentMove = 'up';
+                break;
             case 40:
                 currentMove = 'down';
+                break;
         }
-        alert(event.which);
     });
+    
+    var move = function(dir) {
+        switch(dir) {
+            case 'right':
+                $(update_head('right')).addClass('snakehead');
+                //update_body();
+                break;
+
+            case 'left':
+                $(update_head('left')).addClass('snakehead');
+                //update_body();
+                break;
+
+            case 'up':
+                $(update_head('up')).addClass('snakehead');
+                //update_body();
+                break;
+
+            case 'down':
+                $(update_head('down')).addClass('snakehead');
+                //update_body();
+                break;
+
+        }
+    }
+
 
     
 }
@@ -87,7 +150,7 @@ $(document).keypress(function(event) {
 // Global Variables
 var boardWidth = Math.round($(window).width() * 0.8 / 20) * 20;
 var boardHeight = Math.round($(window).height() * 0.7 / 20) * 20;
-var SNAKE = [];
+var BODY = [];
 
 
 $(document).ready(function() {

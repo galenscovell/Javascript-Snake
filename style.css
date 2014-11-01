@@ -32,7 +32,7 @@ p {
     box-shadow: inset 0px 0px 1px gray;
 }
 
-.snakehead, .snakebody {
+.snakehead, .snake {
     background-color: rgba(0, 125, 0, 0.5);
 }
 
