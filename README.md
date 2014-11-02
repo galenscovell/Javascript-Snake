@@ -4,9 +4,8 @@
 
 Classic game of Snake with some original tidbits thrown in for good measure.
 
-* Dynamic board size depending on window width/height
-* 
-* 
-* 
+* Dynamic board creation based on window size
+* Scoreboard
+* Power-ups
 
-LIVE DEMO:[]
+LIVE DEMO:[SOON]
