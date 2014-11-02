@@ -5,67 +5,47 @@ function create_board(width, height) {
     $('#game_board').width(width);
     $('#game_board').height(height);
 
-    for (y = 0; y < height; y += 20) {
-        for (x = 0; x < width; x += 20) {
-            $('#game_board').append('<div class="game_square" id=' + (x / 20) + '_' + (y / 20) + '></div>');
+    var count = 0;
+    var container = $('#game_board');
+
+    for (y = 0; y < (height / 20); y++) {
+        for (x = 0; x < (width / 20); x++) {
+            $('<div class="game_square" id=' + (x + 1 + count) + '></div>').appendTo(container);
         }
+        count += NEXTROW;
+        $("<div id=" + (y + 1) + "></div>").css("clear", "both").appendTo(container);
     }
+
+    $('.game_square').mouseover(function() {
+        $('p').html(this.id);
+    })
 }
 
 
 function create_snake() {
-    // Create 3-unit snake at (9,9), (8,9), (7,9)
-    $('#9_9').addClass('snakehead');
-    $('#8_9').addClass('snake');
-    $('#7_9').addClass('snake');
+    // Initialize 3-unit snake at div 122, 121, 120
+    $('#120').addClass('snake');
+    $('#121').addClass('snake');
+    $('#122').addClass('snakehead');
 
-    // Add body segment positions to object
-    
+    // Push snake segments to snake array
+    SNAKE.push('120');
+    SNAKE.push('121');
+    SNAKE.push('122');
 }
 
 
 
 function generate_fruit() {
     // Generate randomly placed fruit on board
-    var fruitX = Math.round((Math.random() * boardWidth) / 20) * 20;
-    var fruitY = Math.round((Math.random() * boardHeight) / 20) * 20;
-    var fruitID = '#' + (fruitX / 20) + "_" + (fruitY / 20);
+    var fruitID = '#' + (Math.round(Math.random() * (boardWidth / 20) * 22));
 
-    if ($(fruitID).is('.snake', 'snakehead')) {
+    // Make sure it isn't generated on snake
+    if ($(fruitID).is('.snake', '.snakehead')) {
         generate_fruit();
     } else {
         $(fruitID).addClass('fruit');
     }
-}
-
-
-function update_head(direction) {
-    var current = $('.snakehead').attr('id').split("_");
-    var update = 0;
-
-    $('.snakehead').removeClass('snakehead');
-
-    if (direction === 'right') {
-        update = parseInt(current[0]) + 1;
-        updatedSpot = "#" + update + "_" + current[1];
-        return updatedSpot;
-    } else if (direction === 'left') {
-        update = parseInt(current[0]) - 1;
-        updatedSpot = "#" + update + "_" + current[1];
-        return updatedSpot;
-    } else if (direction === 'up') {
-        update = parseInt(current[1]) - 1;
-        updatedSpot = "#" + current[0] + "_" + update;
-        return updatedSpot;
-    } else if (direction === 'down') {
-        update = parseInt(current[1]) + 1;
-        updatedSpot = "#" + current[0] + "_" + update;
-        return updatedSpot;
-    }
-}
-
-function update_body() {
-    
 }
 
 
@@ -97,32 +77,43 @@ function snake_movement() {
     });
     
     var move = function(dir) {
+        var currentPosition = SNAKE[SNAKE.length - 1];
+
         switch(dir) {
             case 'right':
-                $(update_head('right')).addClass('snakehead');
-                //update_body();
+                var nextID = currentPosition + 1;
                 break;
-
             case 'left':
-                $(update_head('left')).addClass('snakehead');
-                //update_body();
+                var nextID = currentPosition - 1;
                 break;
-
             case 'up':
-                $(update_head('up')).addClass('snakehead');
-                //update_body();
+                var nextID = (currentPosition - NEXTROW);
                 break;
-
             case 'down':
-                $(update_head('down')).addClass('snakehead');
-                //update_body();
+                var nextID = (currentPosition + NEXTROW);
                 break;
-
         }
+
+
+        var snakeTail = 0;
+        // Update snake segment positions
+        for (var s = 0; s < SNAKE.length; s++) {
+            $('#' + SNAKE[s]).removeClass('snake');
+            SNAKE[s] = SNAKE[s + 1];
+        }
+
+        if (snakeTail !== 0) {
+            SNAKE.unshift(snakeTail);
+        }
+
+        for (var u = 0; u < SNAKE.length; u++) {
+            $('#' + SNAKE[u]).addClass('snake');
+        }
+
+        SNAKE[SNAKE.length - 1] = nextID;
+        $("#" + nextID).addClass('snakehead');
+        $("#" + currentPosition).removeClass('snakehead');
     }
-
-
-    
 }
 
 
@@ -147,10 +138,13 @@ $(document).keypress(function(event) {
 
 
 
-// Global Variables
+// Grid Variables
 var boardWidth = Math.round($(window).width() * 0.8 / 20) * 20;
 var boardHeight = Math.round($(window).height() * 0.7 / 20) * 20;
-var BODY = [];
+
+// Global
+var NEXTROW = (boardWidth / 20);
+var SNAKE = [];
 
 
 $(document).ready(function() {
