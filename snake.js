@@ -15,10 +15,6 @@ function create_board(width, height) {
         count += NEXTROW;
         $("<div id=" + (y + 1) + "></div>").css("clear", "both").appendTo(container);
     }
-
-    $('.game_square').mouseover(function() {
-        $('p').html(this.id);
-    })
 }
 
 
@@ -81,7 +77,7 @@ function snake_movement() {
 
         switch(dir) {
             case 'right':
-                var nextID = currentPosition + 1;
+                var nextID = parseInt(currentPosition) + 1;
                 break;
             case 'left':
                 var nextID = currentPosition - 1;
@@ -90,13 +86,25 @@ function snake_movement() {
                 var nextID = (currentPosition - NEXTROW);
                 break;
             case 'down':
-                var nextID = (currentPosition + NEXTROW);
+                var nextID = (parseInt(currentPosition) + NEXTROW);
                 break;
         }
 
-
+        // Fruit-eating event
         var snakeTail = 0;
-        // Update snake segment positions
+        if ($('#' + nextID).hasClass('fruit')) {
+            snakeTail = SNAKE[0];
+            $('#' + nextID).removeClass('fruit');
+            generate_fruit();
+        }
+
+        // Snake collision event
+        if ($('#' + nextID).hasClass('snake')) {
+            alert('Collision!');
+            currentMove = '';
+        }
+
+        // Update snake segments
         for (var s = 0; s < SNAKE.length; s++) {
             $('#' + SNAKE[s]).removeClass('snake');
             SNAKE[s] = SNAKE[s + 1];

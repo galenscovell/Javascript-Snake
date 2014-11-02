@@ -33,10 +33,14 @@ p {
     box-shadow: inset 0px 0px 1px gray;
 }
 
-.snakehead, .snake {
-    background-color: rgba(0, 125, 0, 0.5);
+.snakehead {
+    background-color: rgba(0, 75, 0, 0.7);
+}
+
+.snake {
+    background-color: rgba(0, 125, 0, 0.7);
 }
 
 .fruit {
-    background-color: rgba(125, 0, 0, 0.5);
+    background-color: rgba(125, 0, 0, 0.7);
 }
