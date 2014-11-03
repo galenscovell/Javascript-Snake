@@ -6,14 +6,31 @@ function create_board(width, height) {
     $('#game_board').height(height);
 
     var count = 0;
-    var container = $('#game_board');
 
     for (y = 0; y < (height / 20); y++) {
         for (x = 0; x < (width / 20); x++) {
-            $('<div class="game_square" id=' + (x + 1 + count) + '></div>').appendTo(container);
+            $('<div class="game_square" id=' + (x + 1 + count) + '></div>').appendTo('#game_board');
+
+            // Add border class to first iteration of each row
+            if (x == 0) {
+                $('#' + (x + 1 + count)).addClass('border');
+                $('#' + (x + 1 + count)).css({
+                    'background-color': '#262626',
+                    'box-shadow': 'none'
+                });
+            // Add border class to final iteration of each row
+            } else if (x == ((width / 20) - 1)) {
+                $('#' + (x + 1 + count)).addClass('border');
+                $('#' + (x + 1 + count)).css({
+                    'background-color': '#262626',
+                    'box-shadow': 'none'
+                });
+            }
+
         }
+        // Begin next row, append board width to new iteration
         count += NEXTROW;
-        $("<div id=" + (y + 1) + "></div>").css("clear", "both").appendTo(container);
+        $("<div id=" + (y + 1) + "></div>").css("clear", "both").appendTo('#game_board');
     }
 }
 
@@ -36,11 +53,11 @@ function generate_fruit() {
     // Generate randomly placed fruit on board
     var fruitID = '#' + (Math.round(Math.random() * (boardWidth / 20) * 22));
 
-    // Make sure it isn't generated on snake
-    if ($(fruitID).is('.snake', '.snakehead')) {
-        generate_fruit();
-    } else {
+    // Make sure it isn't generated on snake or border
+    if (!$(fruitID).attr('class').match(/snake|snakehead|border/)) {
         $(fruitID).addClass('fruit');
+    } else {
+        generate_fruit();
     }
 }
 
@@ -74,19 +91,20 @@ function snake_movement() {
     
     var move = function(dir) {
         var currentPosition = SNAKE[SNAKE.length - 1];
+        var nextID = 0;
 
         switch(dir) {
             case 'right':
-                var nextID = parseInt(currentPosition) + 1;
+                nextID = parseInt(currentPosition) + 1;
                 break;
             case 'left':
-                var nextID = currentPosition - 1;
+                nextID = parseInt(currentPosition) - 1;
                 break;
             case 'up':
-                var nextID = (currentPosition - NEXTROW);
+                nextID = (parseInt(currentPosition) - NEXTROW);
                 break;
             case 'down':
-                var nextID = (parseInt(currentPosition) + NEXTROW);
+                nextID = (parseInt(currentPosition) + NEXTROW);
                 break;
         }
 
@@ -104,16 +122,30 @@ function snake_movement() {
             currentMove = '';
         }
 
-        // Update snake segments
+        // Top/bottom boundary collision event
+        if (!$('#' + nextID).hasClass('game_square')) {
+            alert('Collision!');
+            currentMove = '';
+        }
+
+        // Left/Right boundary collision event
+        if ($('#' + nextID).hasClass('border')) {
+            alert('Collision!');
+            currentMove = '';
+        }
+
+        // Remove old segment positions
         for (var s = 0; s < SNAKE.length; s++) {
             $('#' + SNAKE[s]).removeClass('snake');
             SNAKE[s] = SNAKE[s + 1];
         }
 
+        // Add segment if fruit eaten
         if (snakeTail !== 0) {
             SNAKE.unshift(snakeTail);
         }
 
+        // Add new segment positions
         for (var u = 0; u < SNAKE.length; u++) {
             $('#' + SNAKE[u]).addClass('snake');
         }

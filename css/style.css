@@ -35,12 +35,15 @@ p {
 
 .snakehead {
     background-color: rgba(0, 75, 0, 0.7);
+    box-shadow: none;
 }
 
 .snake {
     background-color: rgba(0, 125, 0, 0.7);
+    box-shadow: none;
 }
 
 .fruit {
     background-color: rgba(125, 0, 0, 0.7);
+    box-shadow: none;
 }
