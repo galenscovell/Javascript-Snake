@@ -18,6 +18,16 @@ p {
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
+h3 {
+    text-align: center;
+    color: gray;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
 #game_board {
     margin: 0 auto;
     background: #262626;
@@ -44,6 +54,12 @@ p {
 }
 
 .fruit {
-    background-color: rgba(125, 0, 0, 0.7);
+    background-color: rgba(175, 0, 0, 0.8);
     box-shadow: none;
 }
+
+.badfruit {
+    background-color: rgba(150, 50, 25, 0.7);
+    box-shadow: none;
+}
+

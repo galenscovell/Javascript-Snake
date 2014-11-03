@@ -51,25 +51,34 @@ function create_snake() {
 
 function generate_fruit() {
     // Generate randomly placed fruit on board
-    var fruitID = '#' + (Math.round(Math.random() * (boardWidth / 20) * 22));
-
-    // Make sure it isn't generated on snake or border
-    if (!$(fruitID).attr('class').match(/snake|snakehead|border/)) {
-        $(fruitID).addClass('fruit');
-    } else {
-        generate_fruit();
+    var fruitGenerated = false;
+    while (fruitGenerated == false) {
+        var fruitID = '#' + (Math.round(Math.random() * ((boardWidth / 20) * (boardHeight / 20))));
+        if (!$(fruitID).attr('class').match(/snake|snakehead|border|badfruit/)) {
+            $(fruitID).addClass('fruit');
+            fruitGenerated = true;
+        } 
+    }
+    // Generate randomly placed bad fruit on board
+    var badFruitGenerated = 0;
+    while (badFruitGenerated !== 5) {
+        var badFruitID = '#' + (Math.round(Math.random() * ((boardWidth / 20) * (boardHeight / 20))));
+        if (!$(badFruitID).attr('class').match(/snake|snakehead|border|fruit/)) {
+            $(badFruitID).addClass('badfruit');
+            badFruitGenerated += 1;
+        } 
     }
 }
 
 
-function snake_movement() {
+function game_play() {
     var currentMove = '';
 
-    setInterval(function() {
+    var intervalID = setInterval(function() {
         if (currentMove != '') {
             move(currentMove);
         }
-    }, 100);
+    }, 80);
 
     $(document).keydown(function(event) {
         event.preventDefault();
@@ -112,26 +121,45 @@ function snake_movement() {
         var snakeTail = 0;
         if ($('#' + nextID).hasClass('fruit')) {
             snakeTail = SNAKE[0];
-            $('#' + nextID).removeClass('fruit');
+            $('.fruit').removeClass('fruit');
+            $('.badfruit').removeClass('badfruit');
+            SCORE += 10;
+            $('p').html("SCORE: " + SCORE + "pts.");
             generate_fruit();
+        }
+
+        // Bad fruit-eating event
+        if ($('#' + nextID).hasClass('badfruit')) {
+            $('#' + nextID).removeClass('badfruit');
+            SCORE -= 10;
+            $('p').html("SCORE: " + SCORE + "pts.");
         }
 
         // Snake collision event
         if ($('#' + nextID).hasClass('snake')) {
-            alert('Collision!');
             currentMove = '';
+            clearInterval(intervalID);
+            alert("Collision! End Score: " + SCORE);
+            init_game();
+            return;
         }
 
-        // Top/bottom boundary collision event
+        // Top/bottom boundary collision
         if (!$('#' + nextID).hasClass('game_square')) {
-            alert('Collision!');
             currentMove = '';
+            clearInterval(intervalID);
+            alert("Collision! End Score: " + SCORE);
+            init_game();
+            return;
         }
 
-        // Left/Right boundary collision event
+        // Left/right boundary collision
         if ($('#' + nextID).hasClass('border')) {
-            alert('Collision!');
             currentMove = '';
+            clearInterval(intervalID);
+            alert("Collision! End Score: " + SCORE);
+            init_game();
+            return;
         }
 
         // Remove old segment positions
@@ -157,25 +185,29 @@ function snake_movement() {
 }
 
 
-function play_game() {
+function init_game() {
+    SNAKE = [];
+    SCORE = 0;
+    $('.snake').removeClass('snake');
+    $('.snakehead').removeClass('snakehead');
+    $('.fruit').removeClass('fruit');
+    $('.badfruit').removeClass('badfruit');
+    $('p').html("SCORE: " + SCORE + "pts.");
+
+    create_snake();
     generate_fruit();
-    snake_movement();
+    game_play();
 }
 
 
 $(document).keypress(function(event) {
-    console.log(event.which);
     if (event.which === 13) {
         if ($('p').html() == "PRESS ENTER TO START") {
             event.preventDefault();
-            $('p').html("PRESS ARROW KEYS TO CHANGE DIRECTION");
-
-            play_game();
+            init_game();
         }
     }
 });
-
-
 
 
 // Grid Variables
@@ -185,9 +217,9 @@ var boardHeight = Math.round($(window).height() * 0.7 / 20) * 20;
 // Global
 var NEXTROW = (boardWidth / 20);
 var SNAKE = [];
+var SCORE = 0;
 
 
 $(document).ready(function() {
     create_board(boardWidth, boardHeight);
-    create_snake();
 });
