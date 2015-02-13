@@ -1,3 +1,5 @@
+<img src='http://galenscovell.github.io/css/pics/snake.png' width=500px />
+
 # Javascript-Snake
 
 Classic game of Snake with some additional tidbits thrown in for good measure.
