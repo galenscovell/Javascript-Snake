@@ -1,32 +1,43 @@
 
 body {
-    background: url('pics/bgdesk.jpg') no-repeat center;
+    background-color: rgba(118, 158, 203, 0.4);
     margin: 0;
     padding: 0;
+    font-family: 'Open Sans', sans-serif;
 }
 
-p {
+#startslate {
+    margin: 10px auto 0 auto;
+    padding: 0;
     text-align: center;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 21px;
-    background: linear-gradient(#262626, #1C1C1C);
-    color: gray;
-    width: 100%;
+    font-size: 18px;
+    background-color: #f3f3f3;
+    color: black;
+    width: 25%;
     height: 40px;
     line-height: 40px;
-    box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.8);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 40px 40px 0 0;
+    box-shadow: 0px 0px 1px rgba(60, 60, 60, 0.6);
 }
 
-h3 {
-    text-align: center;
-    color: gray;
-    font-family: 'Open Sans', sans-serif;
+#endslate {
     font-weight: normal;
-    font-size: 16px;
-    line-height: 20px;
-    background: rgba(0, 0, 0, 0.3);
-    margin-bottom: 0px;
+    margin: 0 auto 10px auto;
+    padding: 0;
+    text-align: center;
+    font-size: 14px;
+    background-color: #f3f3f3;
+    color: black;
+    width: 25%;
+    height: 60px;
+    line-height: 30px;
+    border-radius: 0 0 40px 40px;
+    box-shadow: 0px 2px 1px rgba(60, 60, 60, 0.4);
+}
+
+#endslate p {
+    margin: 0;
+    padding: 0;
 }
 
 #link {
@@ -34,49 +45,53 @@ h3 {
 }
 
 a {
+    margin: 0;
+    padding: 0;
     text-decoration: none;
     color: gray;
-    transition: 0.5s;
+    transition: 0.1s;
 }
 
 a:hover {
-    color: white;
-    transition: 0.5s;
+    color: black;
+    transition: 0.1s;
 }
 
 
 #game_board {
     margin: 0 auto;
-    background: #262626;
+    background: #f3f3f3;
     padding: 20px;
-    box-shadow: 0px 5px 5px rgba(0, 0, 0, 1);
+    border-radius: 6px;
+    box-shadow: 0px 2px 1px rgba(60, 60, 60, 0.4);
 }
 
 .game_square {
     float: left;
-    background: rgba(0, 0, 0, 1);
-    height: 20px;
-    width: 20px;
-    box-shadow: inset 0px 0px 1px gray;
+    background: rgba(60, 60, 60, 0.3);
+    height: 22px;
+    width: 22px;
+    margin: 1px;
+    box-shadow: 0px 1px 1px rgba(60, 60, 60, 0.4);
 }
 
 .snakehead {
     background-color: rgba(0, 75, 0, 0.7);
-    box-shadow: none;
+    box-shadow: 0px 1px 1px rgba(0, 75, 0, 0.4);
 }
 
 .snake {
     background-color: rgba(0, 125, 0, 0.7);
-    box-shadow: none;
+    box-shadow: 0px 1px 1px rgba(0, 125, 0, 0.4);
 }
 
 .fruit {
     background-color: rgba(175, 0, 0, 0.8);
-    box-shadow: none;
+    box-shadow: 0px 1px 1px rgba(175, 0, 0, 0.4);
 }
 
 .badfruit {
     background-color: rgba(150, 50, 25, 0.7);
-    box-shadow: none;
+    box-shadow: 0px 1px 1px rgba(150, 50, 25, 0.4);
 }
 

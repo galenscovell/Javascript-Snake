@@ -1,21 +1,32 @@
-<!DOCTYPE html>
-<html>
 
+<!DOCTYPE html>
+<!-- @author: Galen Scovell -->
+<!-- @email: galen.scovell@gmail.com -->
+<html lang='en'>
     <head>
         <title>Snake</title>
         <link href="css/style.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+        <!-- Scripts -->
+        <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js' defer></script>
+        <script src="snake.js" defer></script>
+
     </head>
 
     <body>
-        <p>PRESS ENTER TO START</p>
-        <div id="game_board"></div>
-        <h3>Created by Galen Scovell</h3>
-        <div id="link">
-        <a href="https://github.com/galenscovell/Javascript-Snake">(GitHub Repository)</a>
+        <p id="startslate">PRESS ENTER TO START</p>
+        <div id="game_board">
+            
+        </div>
+        <div id="endslate">
+            <p>Created by Galen Scovell</p>
+            <div id="link">
+                <a href="https://github.com/galenscovell/Javascript-Snake">[GitHub]</a>
+            </div>
         </div>
 
-        <script src="jquery-1.11.1.min.js"></script>
-        <script src="snake.js"></script>
     </body>
-
 </html>
